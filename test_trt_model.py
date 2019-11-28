@@ -1,13 +1,22 @@
+#!/usr/bin/env python3
 import numpy as np
 import tensorflow as tf
 import time
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.resnet50 import preprocess_input, decode_predictions
 def benchmark_saved_model(SAVED_MODEL_DIR,batch_size=4):
+    image_x=[]
+    for i in range (batch_size):
+            img_path = './data/img%d.JPG'%(i%4)
+            img = image.load_img(img_path,target_size=(224,224))
+            x = image.img_to_array(img)
+            x = np.expand_dims(x, axis=0)
+            x = preprocess_input(x)
+            image_x.append(x)
     with tf.Session(graph=tf.Graph(), config=config) as sess:
 
-        tf.saved_model.loader.load(
-            sess, [tf.saved_model.tag_constants.SERVING], SAVED_MODEL_DIR)
+        tf.compat.v1.saved_model.loader.load(
+            sess, [tf.saved_model.SERVING], SAVED_MODEL_DIR)
         start = time.time()
         for i in range (batch_size):
             img_path = './data/img%d.JPG'%(i%4)

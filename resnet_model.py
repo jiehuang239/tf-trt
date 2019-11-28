@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from __future__ import absolute_import, division, print_function, unicode_literals
 import os
 import time
@@ -57,9 +58,9 @@ for i in range(4):
   print('{} - Predicted: {}'.format(img_path, decode_predictions(preds, top=3)[0]))
 end = time.time()
 print("processing time :{}m".format((end-start)/4*1000))
-print("saved model")
-model.summary()
-tf.contrib.saved_model.save_keras_model(model,'./resnet_model/')
+#print("saved model")
+#model.summary()
+#tf.contrib.saved_model.save_keras_model(model,'./resnet_model/')
 '''
 export_path = './resnet_model/'
 with tf.keras.backend.get_session() as sess:
